@@ -1,5 +1,5 @@
 from game_state import GameState
-from checkers.moves import CheckersMoveSet
+from checkers_moves import CheckersMoveSet
 from constants import BLACK, WHITE
 
 

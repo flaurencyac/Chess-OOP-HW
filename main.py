@@ -4,10 +4,10 @@ from players import Player, HumanPlayer
 from copy import deepcopy
 import sys
 
-from checkers.pieces import CheckerFactory
-from checkers.game_state import CheckersGameState
-from chess.pieces import ChessFactory
-from chess.game_state import ChessGameState
+from checkers_pieces import CheckerFactory
+from checkers_game_state import CheckersGameState
+from chess_pieces import ChessFactory
+from chess_game_state import ChessGameState
 
 
 class GameHistory():

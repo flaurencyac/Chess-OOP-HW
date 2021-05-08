@@ -1,7 +1,7 @@
 from piece import Piece
 from piece_factory import PieceFactory
 from constants import BLACK, WHITE
-from checkers.moves import CheckersMove, CheckersMoveSet
+from checkers_moves import CheckersMove, CheckersMoveSet
 
 
 class CheckerFactory(PieceFactory):

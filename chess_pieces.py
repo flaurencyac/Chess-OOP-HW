@@ -1,7 +1,7 @@
 from piece import Piece
 from piece_factory import PieceFactory
 from constants import BLACK, WHITE
-from chess.moves import ChessMove, ChessMoveSet
+from chess_moves import ChessMove, ChessMoveSet
 
 
 class ChessFactory(PieceFactory):

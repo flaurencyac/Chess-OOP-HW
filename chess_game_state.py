@@ -1,7 +1,7 @@
 from game_state import GameState
-from checkers.moves import CheckersMoveSet
+from checkers_moves import CheckersMoveSet
 from constants import BLACK, WHITE
-from chess.pieces import King
+from chess_pieces import King
 
 
 class ChessGameState(GameState):
