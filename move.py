@@ -79,3 +79,12 @@ class Move:
 
     def num_captures(self):
         return len(self._captures)
+
+    def evaluate_captures(self):
+        total_points = 0
+        if len(self._captures) == 0:
+            return 0
+        else:
+            for i in self._captures:
+                total_points += i.value
+        return total_points
