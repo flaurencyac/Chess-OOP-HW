@@ -13,7 +13,7 @@ class Piece:
         return self._side
 
     def __str__(self):
-        return self._symbol
+        return self._symbol[0]
 
     def move(self, space):
         self._current_space = space

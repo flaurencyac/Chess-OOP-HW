@@ -184,12 +184,69 @@ class Board:
         else:
             None
 
+    def knw(self, space):
+        "Returns the space to the knight northwest of the given space there is one"
+        if 0 < space.col and space.row > 1:
+            return self._board[space.row - 2][space.col - 1]
+        else:
+            None
+
+    def kne(self, space):
+        "Returns the space to the knight northeast of the given space there is one"
+        if space.col < self._size - 1 and space.row > 1:
+            return self._board[space.row - 2][space.col + 1]
+        else:
+            None
+
+    def ksw(self, space):
+        "Returns the space to the knight southhwest of the given space there is one"
+        if 0 < space.col and space.row < self._size - 2:
+            return self._board[space.row + 2][space.col - 1]
+        else:
+            None
+
+    def kse(self, space):
+        "Returns the space to the knight south east of the given space there is one"
+        if space.col < self.size - 1 and space.row < self._size - 2:
+            return self._board[space.row + 2][space.col + 1]
+        else:
+            None
+
+    def ken(self, space):
+        "Returns the space to the knight east north of the given space there is one"
+        if space.col > 1 and space.row > 0:
+            return self._board[space.row - 1][space.col - 2]
+        else:
+            None
+
+    def kes(self, space):
+        "Returns the space to the knight east south of the given space there is one"
+        if space.col > 1 and space.row < self._size - 1:
+            return self._board[space.row + 1][space.col - 2]
+        else:
+            None
+
+    def kwn(self, space):
+        "Returns the space to the knight west north of the given space there is one"
+        if space.col < self._size - 2 and space.row > 0:
+            return self._board[space.row - 1][space.col + 2]
+        else:
+            None
+
+    def kws(self, space):
+        "Returns the space to the knight west south of the given space there is one"
+        if space.col < self._size - 2 and space.row < self._size - 1:
+            return self._board[space.row + 1][space.col + 2]
+        else:
+            None
+
     def get_dir(self, space, dir) -> Space:
         """Takes in a space and a direction and delegates to the proper directional method
 
         Args:
             space (Space): origin space
-            dir (string): Either "n", "e", "s", "w", "ne", "se", "sw", or "nw"
+            dir (string): Either "n", "e", "s", "w", "ne", "se", "sw", "nw" , "kne", "kse", "knw", "ksw", "ken", \
+            "kes", "kwn", or "kws"
 
         Returns:
             Space: the space in the given direction from the origin space or None if that space is off the board

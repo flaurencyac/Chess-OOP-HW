@@ -7,7 +7,7 @@ class Player:
     def __init__(self, side=None) -> None:
         self.side = side
 
-    def take_turn(self):
+    def take_turn(self, game_state):
         raise NotImplementedError()
 
     @staticmethod
@@ -19,8 +19,25 @@ class Player:
             return RandomCompPlayer()
         elif player_type == "greedy":
             return GreedyCompPlayer()
+        elif player_type[:7] == 'minimax':
+            minimax_player = MinimaxPlayer()
+            minimax_player.set_depth(int(player_type[-1]))
+            return minimax_player
         else:
             return None
+
+
+class MinimaxPlayer(Player):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._depth = None
+
+    def set_depth(self, depth):
+        self._depth = depth
+
+    def take_turn(self, game_state):
+        pass
 
 
 class HumanPlayer(Player):
