@@ -1,6 +1,5 @@
 import random
 
-
 class Player:
     "Abstract player class"
 
@@ -37,6 +36,13 @@ class MinimaxPlayer(Player):
         self._depth = depth
 
     def take_turn(self, game_state):
+        options = game_state.all_possible_moves()
+        #selected_move.execute(game_state)
+        '''heuristic: points based on piece
+        checkers: peassant = 1, king = 2, sum any pieces captured
+        chess: pawn = 1, bishops = 3, knights = 3, rooks = 5, queens = 9, kings 100
+        make AI players generic and print their selected moove after printing the game turn and current player
+        '''
         pass
 
 
@@ -87,17 +93,19 @@ class RandomCompPlayer(Player):
 
 
 class GreedyCompPlayer(Player):
-    "Concrete player class that chooses moves that capture the most pieces while breaking ties randomly"
+    "Concrete player class that chooses moves that capture the greatest total value of pieces while breaking ties randomly"
 
     def take_turn(self, game_state):
         options = game_state.all_possible_moves()
-        max_captures = 0
+        max_value = 0
         potential_moves = []
         for m in options:
-            if m.num_captures() > max_captures:
+            # get total pts from list of captures
+            points = m.evaluate_captures()
+            if points > max_value:
                 potential_moves = [m]
-                max_captures = m.num_captures()
-            elif m.num_captures() == max_captures:
+                max_value = points
+            elif points == max_value:
                 potential_moves.append(m)
 
         selected_move = random.choice(potential_moves)
