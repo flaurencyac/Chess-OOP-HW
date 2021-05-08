@@ -56,6 +56,7 @@ class Pawn(Piece):
             self._symbol = u"♟︎"
             self._directions = ["se", "sw", "s"]
         self._first_move = True
+        self.value = 1
 
     def enumerate_moves(self):
         moves = ChessMoveSet()
@@ -98,6 +99,7 @@ class Bishop(Piece):
         if self._side == BLACK:
             self._symbol = u"♝"
             self._directions = ["se", "sw"]
+        self.value = 3
 
     def enumerate_moves(self):
         moves = ChessMoveSet()
@@ -127,6 +129,7 @@ class Queen(Piece):
         if self._side == BLACK:
             self._symbol = u"♛"
         self._directions = ["ne", "nw", "se", "sw", "n", "s", "e", "w"]
+        self.value = 9
 
     def enumerate_moves(self):
         moves = ChessMoveSet()
@@ -157,6 +160,7 @@ class King(Piece):
         if self._side == BLACK:
             self._symbol = u"♚"
         self._directions = ["ne", "nw", "se", "sw", "n", "s", "e", "w"]
+        self.value = 100
 
     def enumerate_moves(self):
         moves = ChessMoveSet()
@@ -180,6 +184,7 @@ class Rook(Piece):
         if self._side == BLACK:
             self._symbol = u"♜"
         self._directions = ["n", "s", "e", "w"]
+        self.value = 5
 
     def enumerate_moves(self):
         moves = ChessMoveSet()
@@ -210,6 +215,7 @@ class Knight(Piece):
         if self._side == BLACK:
             self._symbol = u"♞"
         self._directions = ["kne", "kse", "knw", "ksw", "ken", "kes", "kwn", "kws"]
+        self.value = 3
 
     def enumerate_moves(self):
         moves = ChessMoveSet()

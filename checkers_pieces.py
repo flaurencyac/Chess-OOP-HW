@@ -28,6 +28,7 @@ class Checker(Piece):
         if self._side == BLACK:
             self._symbol = u"⚈"
             self._directions = ["se", "sw"]
+        self.value = 1
 
     def enumerate_moves(self):
         moves = CheckersMoveSet()
@@ -93,6 +94,7 @@ class KingChecker(Checker):
             self._symbol = u"⚇"
         if self._side == BLACK:
             self._symbol = u"⚉"
+        self.value = 2
 
     def promote(self):
         "Override promote to return self since a king cannot be promoted further"
