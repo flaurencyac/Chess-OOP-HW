@@ -1,4 +1,5 @@
 import random
+import sys
 
 class Player:
     "Abstract player class"
@@ -29,7 +30,7 @@ class Player:
 class MinimaxPlayer(Player):
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super(*args, **kwargs).__init__(*args, **kwargs)
         self._depth = None
 
     def set_depth(self, depth):
@@ -44,6 +45,7 @@ class MinimaxPlayer(Player):
         make AI players generic and print their selected moove after printing the game turn and current player
         '''
         pass
+        sys.exit(0)
 
 
 class HumanPlayer(Player):

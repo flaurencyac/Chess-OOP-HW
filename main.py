@@ -132,8 +132,8 @@ class GameDriver:
 if __name__ == "__main__":
 
     # take in arguments and setup defaults if necessary
-    if len(sys.argv) > 2:
-        game_var = sys.argv[2]
+    if len(sys.argv) > 1:
+        game_var = sys.argv[1]
         if not game_var:
             sys.exit()
     else:
@@ -151,7 +151,7 @@ if __name__ == "__main__":
     else:
         player2 = Player.create_player("human")
 
-    history = len(sys.argv) > 3 and sys.argv[4] == "on"
+    history = len(sys.argv) > 4 and sys.argv[4] == "on"
 
     # create driver and start game
     game = GameDriver(game_var, player1, player2, history)

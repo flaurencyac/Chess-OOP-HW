@@ -25,7 +25,7 @@ class Move:
         "Interacts with the start end and capture Space objects to carry out this move command"
 
         # capture first so we don't overwrite the piece
-        from chess.pieces import Pawn
+        from chess_pieces import Pawn
         for cap in self._captures:
             self._captured_pieces[cap] = cap.piece
             cap.piece = None
