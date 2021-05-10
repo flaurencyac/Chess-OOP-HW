@@ -149,7 +149,7 @@ if __name__ == "__main__":
         if not player2:
             sys.exit()
     else:
-        player2 = Player.create_player("human")
+        player2 = Player.create_player("minimax3")
 
     history = len(sys.argv) > 4 and sys.argv[4] == "on"
 

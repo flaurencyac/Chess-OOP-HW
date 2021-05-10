@@ -1,6 +1,8 @@
 import random
 import sys
 
+from constants import BLACK, WHITE
+
 class Player:
     "Abstract player class"
 
@@ -39,34 +41,35 @@ class MinimaxPlayer(Player):
     def take_turn(self, game_state):
         #print selected move after printing the game turn and current player
         options = game_state.all_possible_moves()
-        selected_move = do_minimax(game_state, self._depth)[0]
+        selected_move = self.do_minimax(game_state, self._depth)[1]
         print(selected_move)
         selected_move.execute(game_state)
 
     def do_minimax(self, node, depth):
-        if leaf(node) or depth == 0:
-            return evaluate_board(node)
+        selected_move = None
+        if self.leaf(node) or depth == 0:
+            return [self.evaluate_board(node), None]
         moves = node.all_possible_moves()
-        if node.current_side == WHITE:
-            max_pts = -infinity
+        if node._current_side == WHITE:
+            max_pts = -1000
             for move in moves:
                 move.execute(node)
-                cur_pts = do_minimax(node, depth -1)
+                cur_pts = self.do_minimax(node, depth -1)[0]
                 move.undo(node)
                 if cur_pts >= max_pts:
                     max_pts = cur_pts
-                    final_move = move
-            return [final_move, max_pts]
-        elif node.current_side == BLACK:
-            min_pts = infinity
+                    selected_move = move
+            return [max_pts, selected_move]
+        elif node._current_side == BLACK:
+            min_pts = 1000
             for move in moves:
                 move.execute(node)
-                cur_pts = do_minimax(node, depth -1)
+                cur_pts = self.do_minimax(node, depth -1)[0]
                 move.undo(node)
                 if cur_pts <= min_pts:
                     min_pts = cur_pts
-                    final_move = move
-            return [final_move, min_pts]
+                    selected_move = move
+            return [min_pts, selected_move]
 
     def leaf(self, game_state):
         "Checks if a node is a leaf by checking if it has children nodes"
@@ -80,9 +83,9 @@ class MinimaxPlayer(Player):
         #obtain list of every piece on the board
         pieces = game_state._board.pieces_iterator()
         for piece in pieces:
-            if piece.side() == WHITE:
+            if piece._side == WHITE:
                 white += piece.value
-            elif piece.side() == BLACK:
+            elif piece._side == BLACK:
                 black += piece.value
         if white == 0:
             # means white lost
@@ -147,13 +150,13 @@ class GreedyCompPlayer(Player):
 
     def take_turn(self, game_state):
         options = game_state.all_possible_moves()
-        max_captured = 0
+        max_captured = -100
         max_moves_dictionary = {}
         ''' dictionary keeps track of the highest points captured by a move and the moves that capture that amount of points
          key = points_captured
          val = moves that capture that amount of points
          dictionary = {
-             1 : [moveA, moveD]
+             0 : [moveA, moveD]
              5 : [moveB, moveC]
          }
         '''
