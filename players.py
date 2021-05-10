@@ -36,15 +36,76 @@ class MinimaxPlayer(Player):
         self._depth = depth
 
     def take_turn(self, game_state):
+        #print selected move after printing the game turn and current player
         options = game_state.all_possible_moves()
-        #selected_move.execute(game_state)
-        '''heuristic: points based on piece
-        checkers: peassant = 1, king = 2, sum any pieces captured
-        chess: pawn = 1, bishops = 3, knights = 3, rooks = 5, queens = 9, kings 100
-        make AI players generic and print their selected moove after printing the game turn and current player
-        '''
-        pass
+        selected_move = do_minimax(game_state, self._depth)[0]
+        print(selected_move)
+        selected_move.execute(game_state)
 
+    def do_minimax(self, node, depth):
+        # if leaf(node) is not true, meaning neither b nor w win
+            # return do_minimax(node)
+        if leaf(node) or depth == 0:
+            return evaluate_board(node)
+        moves = node.all_possible_moves()
+        if node.current_side == WHITE:
+            max_pts = -infinity
+            for move in moves:
+                move.execute(node)
+                cur_pts = do_minimax(node, depth -1)
+                move.undo(node)
+                if cur_pts >= max_pts:
+                    max_pts = cur_pts
+                    final_move = move
+            return [final_move, max_pts]
+        elif node.current_side == BLACK:
+            min_pts = infinity
+            for move in moves:
+                move.execute(node)
+                cur_pts = do_minimax(node, depth -1)
+                move.undo(node)
+                if cur_pts <= min_pts:
+                    min_pts = cur_pts
+                    final_move = move
+            return [final_move, min_pts]
+
+    def leaf(self, game_state):
+        "Checks if a node is a leaf by checking if it has children nodes"
+        if game_state.check_draw() == True or game_state.check_loss() == True:
+            return True
+
+    def evaluate_board(self, game_state):
+        "Scores a game_state with pieces left on the board, b, returns white - black"
+        black = 0
+        white = 0
+        #obtain list of every piece on the board
+        pieces = game_state._board.pieces_iterator()
+        for piece in pieces:
+            if piece.side() == WHITE:
+                white += piece.value
+            elif piece.side() == BLACK:
+                black += piece.value
+        if white == 0:
+            # means white lost
+            return -infinity
+        elif black == 0:
+            # means black lost
+            return infinity
+        else:
+            return white - black
+            # return 0, a tie
+            # return < 0, black is in the lead
+            # return > 0, white is in the lead
+'''
+root is original gamestate
+children are all of the possible states after move we make
+children of those children are possible states after opponent makes move
+heuristic or tie (0) or win (+ infinity) or loss
+base case = leaf nodes return appropriate values
+if we get to move, we take max of child values
+if opponent moves, take min of child values
+when depth reaches, evaluate_board called on node as if it were a leaf
+'''
 
 class HumanPlayer(Player):
     "Concrete player class that prompts for moves via the command line"
@@ -91,7 +152,7 @@ class RandomCompPlayer(Player):
         print(m)
         m.execute(game_state)
 
-
+#make the AI players print their selected move after printing the game turn and current player 
 class GreedyCompPlayer(Player):
     "Concrete player class that chooses moves that capture the greatest total value of pieces while breaking ties randomly"
 
