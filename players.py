@@ -147,17 +147,28 @@ class GreedyCompPlayer(Player):
 
     def take_turn(self, game_state):
         options = game_state.all_possible_moves()
-        max_value = 0
-        potential_moves = []
+        max_captured = 0
+        max_moves_dictionary = {}
+        ''' dictionary keeps track of the highest points captured by a move and the moves that capture that amount of points
+         key = points_captured
+         val = moves that capture that amount of points
+         dictionary = {
+             1 : [moveA, moveD]
+             5 : [moveB, moveC]
+         }
+        '''
+        # the for loop runs through all list of posssible moves and updates the counter for max_points_captured 
+        # and the dictionary to reflect those moves
         for m in options:
             # get total pts from list of captures
-            points = m.evaluate_captures()
-            if points > max_value:
-                potential_moves = [m]
-                max_value = points
-            elif points == max_value:
-                potential_moves.append(m)
-
-        selected_move = random.choice(potential_moves)
+            points_captured = m.evaluate_captures()
+            if points_captured > max_captured:
+                max_moves_dictionary[points_captured] = [m]
+                max_captured = points_captured
+            elif points_captured == max_captured:
+                max_moves_dictionary[points_captured].append(m)
+        # after for loop is done we have the highest max_captured, and so we go into the dictionary to find
+        # which moves result in max_captured, we choose a random move from that list
+        selected_move = random.choice(max_moves_dictionary[max_captured])
         print(selected_move)
         selected_move.execute(game_state)
