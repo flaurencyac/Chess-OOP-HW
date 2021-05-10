@@ -1,4 +1,5 @@
 import random
+import sys
 
 class Player:
     "Abstract player class"
@@ -29,7 +30,7 @@ class Player:
 class MinimaxPlayer(Player):
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super(*args, **kwargs).__init__(*args, **kwargs)
         self._depth = None
 
     def set_depth(self, depth):
@@ -43,8 +44,6 @@ class MinimaxPlayer(Player):
         selected_move.execute(game_state)
 
     def do_minimax(self, node, depth):
-        # if leaf(node) is not true, meaning neither b nor w win
-            # return do_minimax(node)
         if leaf(node) or depth == 0:
             return evaluate_board(node)
         moves = node.all_possible_moves()
@@ -96,16 +95,6 @@ class MinimaxPlayer(Player):
             # return 0, a tie
             # return < 0, black is in the lead
             # return > 0, white is in the lead
-'''
-root is original gamestate
-children are all of the possible states after move we make
-children of those children are possible states after opponent makes move
-heuristic or tie (0) or win (+ infinity) or loss
-base case = leaf nodes return appropriate values
-if we get to move, we take max of child values
-if opponent moves, take min of child values
-when depth reaches, evaluate_board called on node as if it were a leaf
-'''
 
 class HumanPlayer(Player):
     "Concrete player class that prompts for moves via the command line"
