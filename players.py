@@ -2,6 +2,9 @@ import random
 import sys
 
 from constants import BLACK, WHITE
+from game_state import *
+from board import *
+from piece import *
 
 class Player:
     "Abstract player class"

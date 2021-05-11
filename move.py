@@ -82,9 +82,9 @@ class Move:
 
     def evaluate_captures(self):
         total_points = 0
-        if len(self._captures) == 0:
+        if len(self._captured_pieces) == 0:
             return 0
         else:
-            for i in self._captures:
-                total_points += i.value
+            for space, piece in self._captured_pieces.items():
+                total_points += piece.value
         return total_points
