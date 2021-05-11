@@ -143,7 +143,7 @@ if __name__ == "__main__":
         if not player1:
             sys.exit()
     else:
-        player1 = Player.create_player("minimax4")
+        player1 = Player.create_player("human")
     if len(sys.argv) > 3:
         player2 = Player.create_player(sys.argv[3])
         if not player2:

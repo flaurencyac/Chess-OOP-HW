@@ -90,12 +90,6 @@ class MinimaxPlayer(Player):
                 white += piece.value
             elif piece._side == BLACK:
                 black += piece.value
-        if white == 0:
-            # means white lost
-            return -infinity
-        elif black == 0:
-            # means black lost
-            return infinity
         else:
             return white - black
             # return 0, a tie
