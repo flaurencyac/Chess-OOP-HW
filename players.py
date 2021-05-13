@@ -5,8 +5,6 @@ from constants import BLACK, WHITE
 from game_state import *
 from board import *
 from piece import *
-import time
-
 
 class Player:
     "Abstract player class"
@@ -46,40 +44,34 @@ class MinimaxPlayer(Player):
     def take_turn(self, game_state):
         #print selected move after printing the game turn and current player
         options = game_state.all_possible_moves()
-        selected_move = self.do_minimax(game_state, 10000000, time.time() + 60 * 4.5, -1000000, 1000000)[1]
+        selected_move = self.do_minimax(game_state, self._depth)[1]
         print(selected_move)
         selected_move.execute(game_state)
 
-    def do_minimax(self, node, depth, time_end, alpha, beta):
+    def do_minimax(self, node, depth):
         selected_move = None
-        if self.leaf(node) or time.time() >= time_end:
+        if self.leaf(node) or depth == 0:
             return [self.evaluate_board(node), None]
         moves = node.all_possible_moves()
         if node._current_side == WHITE:
-            max_pts = -1000000
+            max_pts = -1000
             for move in moves:
                 move.execute(node)
-                cur_pts = self.do_minimax(node, depth - 1, time_end, alpha, beta)[0]
+                cur_pts = self.do_minimax(node, depth -1)[0]
                 move.undo(node)
                 if cur_pts >= max_pts:
                     max_pts = cur_pts
                     selected_move = move
-                alpha = max(alpha, max_pts)
-                if beta <= alpha:
-                    break
             return [max_pts, selected_move]
         elif node._current_side == BLACK:
-            min_pts = 10000000
+            min_pts = 1000
             for move in moves:
                 move.execute(node)
-                cur_pts = self.do_minimax(node, depth - 1, time_end, alpha, beta)[0]
+                cur_pts = self.do_minimax(node, depth -1)[0]
                 move.undo(node)
                 if cur_pts <= min_pts:
                     min_pts = cur_pts
                     selected_move = move
-                beta = min(beta, min_pts)
-                if beta <= alpha:
-                    break
             return [min_pts, selected_move]
 
     def leaf(self, game_state):
